@@ -5,6 +5,8 @@ Juanicó, Canelones, Uruguay. Diseño y desarrollo propios, de cero.
 
 > **El fuego se apaga. La cocina empieza.**
 
+![Rescoldo — hero](marketing/portada-desktop.jpg)
+
 ## El concepto
 
 Un solo fuego, encendido a las once de la mañana con sarmientos de las viñas

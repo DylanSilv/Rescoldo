@@ -6,3 +6,4 @@ dist
 # Piezas de video: binarios pesados y regenerables con scripts/reel.mjs
 marketing/*.mp4
 marketing/*.webm
+tsconfig.tsbuildinfo
