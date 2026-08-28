@@ -10,39 +10,51 @@ ambient, piano, folk seco. Nada con voz.
 
 ## Qué es cada archivo
 
+Los dos primeros están **montados para publicar**: llevan placa de título, dos
+textos sobreimpresos y placa de cierre, todo compuesto en Instrument Serif —
+la tipografía real de la marca, no una parecida.
+
 | Archivo | Formato | Dónde va |
 |---|---|---|
-| `rescoldo-vertical.mp4` | 1080×1920 · 53 s | Reel de Instagram y TikTok. La pieza principal. |
-| `rescoldo-hook-vertical.mp4` | 1080×1920 · 19 s | Stories y TikTok. Solo los cuatro momentos más fuertes. |
+| `ig-story.mp4` | 1080×1920 · 19 s | **Empezá por acá.** Stories, TikTok y como primer Reel. |
+| `ig-reel.mp4` | 1080×1920 · 65 s | Reel completo, para quien quiera ver todo el recorrido. |
+| `rescoldo-vertical.mp4` | 1080×1920 · 60 s | El mismo recorrido sin placas, por si querés editarlo vos. |
+| `rescoldo-hook-vertical.mp4` | 1080×1920 · 15 s | El corte corto sin placas. |
 | `rescoldo-desktop.mp4` | 1920×1080 · 49 s | Portafolio, LinkedIn, Behance. |
 | `portada-vertical.jpg` | 1080×1920 | Cover del Reel. |
 | `portada-desktop.jpg` | 1920×1080 | Miniatura del caso en el portafolio. |
+| `placas/` | PNG | Las placas y textos sueltos, por si querés recomponer. |
 
-## Guion del vertical
+Las placas se generan con `node scripts/placas.mjs`, que las dibuja en el
+navegador para que usen las fuentes del propio sitio.
+
+## Guion de `ig-reel.mp4`
 
 | Tiempo | Plano | Por qué está |
 |---|---|---|
-| 0:00 | Preloader en negro, la marca entra por máscara | Arranca en negro: frena el scroll del feed |
-| 0:03 | Menú a pantalla completa | Prueba que hay diseño mobile propio, no un desktop achicado |
-| 0:07 | Manifiesto, palabra por palabra | El respiro. Cambio de negro a blanco |
-| 0:14 | Los números contando: 1 · 34 · 0 · 90 km | El dato que convierte «lindo» en «esto es en serio» |
-| 0:21 | Tramo de brasas | El plano más lindo del sitio. Este es el que se comparte |
-| 0:24 | Carrusel de platos | Producto |
-| 0:29 | La carta | Contenido real, no lorem ipsum |
-| 0:38 | El espacio | Fotografía |
-| 0:42 | Reserva completándose hasta «Te esperamos.» | Prueba que **funciona**, no que solo se ve bien |
-| 0:50 | Cierre sobre la marca en grande | Recuerdo |
+| 0:00 | **Placa**: «Diseñé la web de un restaurante que *no existe*» | El gancho. Negro sobre negro: empalma con el preloader sin corte visible |
+| 0:03 | Hero, la marca entra por máscara | Primera impresión |
+| 0:05 | Menú a pantalla completa | Prueba que hay diseño mobile propio, no un desktop achicado |
+| 0:08 | Manifiesto, palabra por palabra | El respiro. Cambio de negro a blanco |
+| 0:20 | Los números contando: 1 · 34 · 0 · 90 km | El dato que convierte «lindo» en «esto es en serio» |
+| 0:24 | Tramo de brasas + **texto**: «El fuego no es una foto» | El plano más lindo, y el que explica la decisión técnica |
+| 0:27 | Carrusel de platos | Producto |
+| 0:32 | La carta | Contenido real, no lorem ipsum |
+| 0:44 | El espacio | Fotografía |
+| 0:47 | Reserva completándose | |
+| 0:53 | Confirmación + **texto**: «Y la reserva *funciona de verdad*» | Prueba que funciona, no que solo se ve bien |
+| 1:02 | **Placa de cierre**: marca, crédito y «link en la bio» | Recuerdo y llamada a la acción |
 
-El corte de Stories usa los minutos 0:00, 0:21, 0:24 y 0:47.
+El corte de Stories usa el gancho, el tramo de brasas, los platos y la
+confirmación.
 
 ## Cómo publicarlo
 
-**Reel (vertical).** Los primeros dos segundos deciden todo. Poné un texto
-sobreimpreso que arranque con una afirmación, no con una explicación:
+**Reel.** El gancho ya viene montado en la placa de título, así que no hace
+falta agregar texto en la app. Cover: `portada-vertical.jpg`.
 
-> *Diseñé la web de un restaurante que no existe.*
-
-y recién después el video hace su trabajo. Cover: `portada-vertical.jpg`.
+Publicá primero `ig-story.mp4`: 19 segundos rinden mucho mejor que 65 en un
+primer posteo, y si funciona, después subís el completo.
 
 **Stories.** El corte de 19 s con un sticker de encuesta («¿parece real?»)
 sobre el segundo plano. Sirve para medir antes de invertir en el Reel.

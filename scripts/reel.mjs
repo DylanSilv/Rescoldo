@@ -63,16 +63,22 @@ async function irHasta(page, id, offset = 0, opts) {
   if (delta !== 0) await desplazar(page, delta, opts)
 }
 
+// Marca de inicio de la grabación: los tiempos que informa cada plano se usan
+// después para colocar los textos sobreimpresos sin adivinar.
+let t0 = 0
+
 async function plano(nombre, fn) {
-  process.stdout.write(`  · ${nombre}\n`)
+  const desde = (Date.now() - t0) / 1000
   try {
     await fn()
   } catch (error) {
     process.stdout.write(`    ⚠ ${nombre}: ${error.message}\n`)
   }
+  const hasta = (Date.now() - t0) / 1000
+  process.stdout.write(`  ${desde.toFixed(1).padStart(5)}s → ${hasta.toFixed(1).padStart(5)}s  ${nombre}\n`)
 }
 
-async function reservar(page, { rapido = false } = {}) {
+async function reservar(page, { rapido = false, esperaFinal = 0 } = {}) {
   const boton = (re) => page.getByRole('button', { name: re }).first()
 
   await page.getByRole('button', { name: '4', exact: true }).click()
@@ -92,7 +98,7 @@ async function reservar(page, { rapido = false } = {}) {
   await page.type('#email', 'lucia@correo.uy', { delay: rapido ? 40 : 55 })
   await esperar(rapido ? 700 : 1100)
   await boton(/Confirmar reserva/).click()
-  await esperar(rapido ? 2200 : 3000)
+  await esperar(esperaFinal || (rapido ? 2200 : 3000))
 }
 
 /* ------------------------------------------------------------------ */
@@ -118,6 +124,7 @@ await page.addInitScript(() => {
 
 console.log(`\nGrabando «${MODO}» — ${perfil.video.width}×${perfil.video.height}\n`)
 
+t0 = Date.now()
 await page.goto(BASE, { waitUntil: 'load' })
 
 if (perfil.movil) {
@@ -129,14 +136,14 @@ if (perfil.movil) {
 
   await plano('Menú a pantalla completa', async () => {
     await page.getByRole('button', { name: 'Abrir menú' }).click()
-    await esperar(1900)
+    await esperar(1500)
     await page.getByRole('button', { name: 'Cerrar menú' }).click()
     await esperar(800)
   })
 
   await plano('Manifiesto', async () => {
-    await irHasta(page, 'manifiesto', 0, { paso: 54, ritmo: 15 })
-    await esperar(1900)
+    await irHasta(page, 'manifiesto', 0, { paso: 58, ritmo: 14 })
+    await esperar(1600)
   })
 
   await plano('El fuego · los números', async () => {
@@ -148,7 +155,7 @@ if (perfil.movil) {
 
   await plano('Tramo de brasas', async () => {
     await desplazar(page, 900, { paso: 54 })
-    await esperar(2400)
+    await esperar(4600)
   })
 
   await plano('Platos · carrusel', async () => {
@@ -171,8 +178,8 @@ if (perfil.movil) {
   await plano('El espacio', async () => {
     await irHasta(page, 'espacio', -20, { paso: 70 })
     await esperar(800)
-    await desplazar(page, 1400, { paso: 52, ritmo: 16 })
-    await esperar(1000)
+    await desplazar(page, 1400, { paso: 60, ritmo: 15 })
+    await esperar(800)
   })
 
   await plano('Reservas', async () => {
@@ -180,7 +187,7 @@ if (perfil.movil) {
     await esperar(700)
     await desplazar(page, 620, { paso: 54 })
     await esperar(500)
-    await reservar(page, { rapido: true })
+    await reservar(page, { rapido: true, esperaFinal: 4400 })
   })
 
   await plano('Cierre en la marca', async () => {
