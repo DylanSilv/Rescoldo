@@ -1,0 +1,310 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------
+   RESCOLDO — sistema visual
+   Cinco colores. Tres tipografías. Nada más.
+------------------------------------------------------------------ */
+
+@theme {
+  /* Color */
+  --color-ceniza: #f2efe9;
+  --color-cal: #fbfaf7;
+  --color-humo: #14110f;
+  --color-carbon: #221e1a;
+  --color-piedra: #7c766d;
+  --color-rescoldo: #bf4b21;
+
+  /* Tipografía */
+  --font-display: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "DM Mono", ui-monospace, "SF Mono", monospace;
+
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1;
+
+  /* Movimiento */
+  --ease-rescoldo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-brasa: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Ritmo vertical */
+  --spacing-chapter: clamp(5.5rem, 13vh, 10.5rem);
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    border-color: color-mix(in srgb, currentColor 14%, transparent);
+  }
+
+  html {
+    /* los dos extremos del sitio son oscuros: el rebote del scroll también */
+    background-color: var(--color-humo);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: auto; /* lo maneja Lenis */
+  }
+
+  body {
+    background-color: var(--color-ceniza);
+    color: var(--color-humo);
+    font-family: var(--font-sans);
+    font-synthesis-weight: none;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--color-rescoldo);
+    color: var(--color-cal);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-rescoldo);
+    outline-offset: 3px;
+  }
+
+  /* La barra de scroll también es diseño */
+  ::-webkit-scrollbar { width: 9px; }
+  ::-webkit-scrollbar-track { background: var(--color-ceniza); }
+  ::-webkit-scrollbar-thumb {
+    background: color-mix(in srgb, var(--color-piedra) 50%, transparent);
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--color-rescoldo); }
+}
+
+@layer components {
+  /* ------------------------------------------------------------------
+     Escala tipográfica fluida
+  ------------------------------------------------------------------ */
+
+  .type-hero {
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 10.5vw, 9.5rem);
+    line-height: 0.85;
+    letter-spacing: -0.035em;
+    font-weight: 400;
+  }
+
+  .type-display {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 5.4vw, 4.75rem);
+    line-height: 0.96;
+    letter-spacing: -0.025em;
+    font-weight: 400;
+  }
+
+  .type-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 2.8vw, 2.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    font-weight: 400;
+  }
+
+  .type-lead {
+    font-size: clamp(1.0625rem, 1.45vw, 1.375rem);
+    line-height: 1.55;
+    letter-spacing: -0.011em;
+  }
+
+  .type-body {
+    font-size: clamp(0.9375rem, 1vw, 1rem);
+    line-height: 1.7;
+    letter-spacing: -0.005em;
+  }
+
+  /* La capa técnica: etiquetas, horarios, precios, numeración */
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .numeral {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.02em;
+  }
+
+  /* ------------------------------------------------------------------
+     Grano: unifica todo el sitio bajo una misma textura
+  ------------------------------------------------------------------ */
+
+  .grain::after {
+    content: "";
+    position: fixed;
+    inset: -120%;
+    z-index: 70;
+    pointer-events: none;
+    opacity: 0.19;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ------------------------------------------------------------------
+     Tratamiento fotográfico único
+     Todas las fotos pasan por el mismo revelado: contraste alto,
+     saturación baja, temperatura cálida, sombras cerradas.
+  ------------------------------------------------------------------ */
+
+  .photo {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(158deg, #2c221c 0%, #14110f 70%);
+  }
+
+  .photo figcaption {
+    text-shadow: 0 1px 14px rgb(20 17 15 / 0.85);
+  }
+
+  .photo img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: contrast(1.07) saturate(0.68) brightness(0.93) sepia(0.1);
+  }
+
+  .photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(115% 90% at 50% 0%, rgb(191 75 33 / 0.13), transparent 62%),
+      linear-gradient(180deg, transparent 35%, rgb(20 17 15 / 0.46));
+  }
+
+  /* ------------------------------------------------------------------
+     Enlaces y botones: una sola línea que se dibuja
+  ------------------------------------------------------------------ */
+
+  .link-rule {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 0.35em;
+  }
+
+  .link-rule::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(1);
+    transform-origin: right;
+    transition: transform 0.6s var(--ease-rescoldo);
+  }
+
+  .link-rule:hover::after {
+    transform: scaleX(0);
+  }
+
+  .link-rule::before {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    bottom: 0;
+    height: 1px;
+    background: var(--color-rescoldo);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s var(--ease-rescoldo) 0.08s;
+  }
+
+  .link-rule:hover::before {
+    transform: scaleX(1);
+  }
+
+  /*
+    Velos del hero. Direccionales, no uniformes: cierran el lado del titular
+    y dejan respirar el lado del sujeto. Calibrados contra la foto real.
+  */
+  /* En una pantalla angosta el titular ocupa todo el ancho: ahí el velo
+     que sirve es vertical. El lateral entra recién en tablet. */
+  .velo-lateral {
+    background: none;
+  }
+
+  .velo-vertical {
+    background: linear-gradient(
+      to top,
+      rgb(20 17 15 / 0.95),
+      rgb(20 17 15 / 0.38) 48%,
+      rgb(20 17 15 / 0.55)
+    );
+  }
+
+  @media (width >= 48rem) {
+    .velo-lateral {
+      background: linear-gradient(
+        to right,
+        rgb(20 17 15 / 0.95),
+        rgb(20 17 15 / 0.45) 48%,
+        rgb(20 17 15 / 0)
+      );
+    }
+
+    .velo-vertical {
+      background: linear-gradient(
+        to top,
+        rgb(20 17 15 / 0.85),
+        rgb(20 17 15 / 0) 55%,
+        rgb(20 17 15 / 0.4)
+      );
+    }
+  }
+
+  /* Guía de columnas: aparece detrás de las secciones claras */
+  .rule-v {
+    background: color-mix(in srgb, var(--color-piedra) 26%, transparent);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Accesibilidad del movimiento
+------------------------------------------------------------------ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+  .grain::after { display: none; }
+}
+
+/* ------------------------------------------------------------------
+   Lenis
+------------------------------------------------------------------ */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
